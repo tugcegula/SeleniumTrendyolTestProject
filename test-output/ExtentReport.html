@@ -35,7 +35,7 @@
 <a href="#"><span class="badge badge-primary"></span></a>
 </li>
 <li class="m-r-10">
-<a href="#"><span class="badge badge-primary">Aug 21, 2025 05:01:17 PM</span></a>
+<a href="#"><span class="badge badge-primary">Sep 3, 2025 05:58:58 PM</span></a>
 </li>
 </ul>
 </div>
@@ -67,6 +67,7 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-exclamation-circle"></i></a>
 <ul id="status-toggle" class="dropdown-menu dropdown-md p-v-0">
 <a class="dropdown-item" status="pass" href="#"><span>Pass</span><span class="status success"></span></a>
+<a class="dropdown-item" status="fail" href="#"><span>Fail</span><span class="status danger"></span></a>
 <div class="dropdown-divider"></div>
 <a status="clear" class="dropdown-item" href="#"><span>Clear</span><span class="pull-right"><i class="fa fa-close"></i></span></a>
 </ul>
@@ -74,25 +75,25 @@
 </ul>
 </div>    <div class="test-list-wrapper scrollable">
       <ul class="test-list-item">
-        <li class="test-item"  status="pass" test-id="1"
+        <li class="test-item"  status="fail" test-id="1"
           author=""
           tag=""
           device="">
           <div class="test-detail">
-            <p class="name">trendyolTitleTest</p>
+            <p class="name">testAddProductToCart</p>
             <p class="text-sm">
-              <span>5:01:17 PM</span> / <span>00:00:11:519</span>
-              <span class="badge pass-bg log float-right">Pass</span>
+              <span>5:59:00 PM</span> / <span>00:00:48:378</span>
+              <span class="badge fail-bg log float-right">Fail</span>
             </p>
           </div>
           <div class="test-contents d-none">
 <div class="detail-head">
 <div class="p-v-10">
 <div class="info">
-<h5 class="test-status text-pass">trendyolTitleTest</h5>
-<span class='badge badge-success'>08.21.2025 5:01:17 PM</span>
-<span class='badge badge-danger'>08.21.2025 5:01:28 PM</span>
-<span class='badge badge-default'>00:00:11:519</span>
+<h5 class="test-status text-fail">testAddProductToCart</h5>
+<span class='badge badge-success'>09.03.2025 5:59:00 PM</span>
+<span class='badge badge-danger'>09.03.2025 5:59:48 PM</span>
+<span class='badge badge-default'>00:00:48:378</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=1</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -104,38 +105,97 @@
   <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
   <tbody>
       <tr class="event-row">
-        <td><span class="badge log info-bg">Info</span></td>
-        <td>5:01:28 PM</td>
+        <td><span class="badge log fail-bg">Fail</span></td>
+        <td>5:59:48 PM</td>
         <td>
-          Trendyol home page is opened.
+          Test FAILED: org.openqa.selenium.NoSuchElementException: Element not foundBy.cssSelector: button[data-testid='add-to-cart-button']
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Build info: version: '4.35.0', revision: '1c58e5028b'
+System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.11'
+Driver info: driver.version: unknown
+        </td>
+      </tr>
+  </tbody>
+</table>
+</div>
+          </div>
+        </li>
+        <li class="test-item"  status="pass" test-id="2"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">verifyBasePageFunctions</p>
+            <p class="text-sm">
+              <span>5:59:48 PM</span> / <span>00:00:24:441</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">verifyBasePageFunctions</h5>
+<span class='badge badge-success'>09.03.2025 5:59:48 PM</span>
+<span class='badge badge-danger'>09.03.2025 6:00:13 PM</span>
+<span class='badge badge-default'>00:00:24:441</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=2</span>
+<span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
+<span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
+<span title='Expand all nodes' class='badge badge-default pointer float-right et'><i class="fa fa-expand"></i></span>
+</div>
+</div>
+</div><div class="detail-body mt-4">
+<table class="table table-sm">
+  <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
+  <tbody>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>6:00:11 PM</td>
+        <td>
+          Login başarılı
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>5:01:28 PM</td>
+        <td>6:00:11 PM</td>
         <td>
-          Page title retrieved: En Trend �r�nler T�rkiye'nin Online Al��veri� Sitesi Trendyol'da
+          Sayfa başlığı: 
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>6:00:11 PM</td>
+        <td>
+          URL kontrolü başarılı: https://www.trendyol.com/giris?cb=%2F
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>6:00:12 PM</td>
+        <td>
+          Sayfa yenilendi
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>6:00:12 PM</td>
+        <td>
+          Geriye navigasyon yapıldı
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>5:01:28 PM</td>
+        <td>6:00:12 PM</td>
         <td>
-          The page title is correct.
-        </td>
-      </tr>
-      <tr class="event-row">
-        <td><span class="badge log pass-bg">Pass</span></td>
-        <td>5:01:28 PM</td>
-        <td>
-          Test successful.
+          Test SUCCESS
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>5:01:28 PM</td>
+        <td>6:00:13 PM</td>
         <td>
-          The browser was closed.
+          Tarayıcı kapatıldı.
         </td>
       </tr>
   </tbody>
@@ -157,13 +217,13 @@
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0">Started</p>
-<h3>Aug 21, 2025 05:01:17 PM</h3>
+<h3>Sep 3, 2025 05:58:58 PM</h3>
 </div></div>
 </div>
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0">Ended</p>
-<h3>Aug 21, 2025 05:01:28 PM</h3>
+<h3>Sep 3, 2025 06:00:13 PM</h3>
 </div></div>
 </div>
 <div class="col-md-3">
@@ -175,7 +235,7 @@
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0 text-fail">Tests Failed</p>
-<h3>0</h3>
+<h3>1</h3>
 </div></div>
 </div>
 </div>
@@ -191,12 +251,12 @@
 </div>
 </div>
 <div class="card-footer">
-<div><small data-tooltip='100%'>
+<div><small data-tooltip='50%'>
 <b>1</b> tests passed
 </small>
 </div>
 <div>
-<small data-tooltip='0%'><b>0</b> tests failed,
+<small data-tooltip='50%'><b>1</b> tests failed,
 <b>0</b> skipped, <b data-tooltip='0%'>0</b> others
 </small>
 </div>
@@ -214,10 +274,10 @@
 </div>
 </div>
 <div class="card-footer">
-<div><small data-tooltip='40%'><b>2</b> events passed</small></div>
+<div><small data-tooltip='12%'><b>1</b> events passed</small></div>
 <div>
-<small data-tooltip='0%'><b>0</b> events failed,
-<b data-tooltip='%'>3</b> others
+<small data-tooltip='12%'><b>1</b> events failed,
+<b data-tooltip='%'>6</b> others
 </small>
 </div>
 </div>
@@ -233,7 +293,7 @@
 </div></div>
 <script>
 var timeline = {
-"trendyolTitleTest":11.519
+"testAddProductToCart":48.378,"verifyBasePageFunctions":24.441
 };
 </script>
 <div class="row">
@@ -244,11 +304,11 @@ var timeline = {
 <thead><tr class="bg-gray"><th>Name</th><th>Value</th></tr></thead>
 <tbody>
 <tr>
-<td>Test Ortam�</td>
+<td>Test Ortamı</td>
 <td>QA</td>
 </tr>
 <tr>
-<td>Taray�c�</td>
+<td>Tarayıcı</td>
 <td>Chrome</td>
 </tr>
 <tr>
@@ -265,7 +325,7 @@ var timeline = {
 var statusGroup = {
 parentCount: 5,
 passParent: 1,
-failParent: 0,
+failParent: 1,
 warningParent: 0,
 skipParent: 0,
 childCount: 5,
@@ -281,11 +341,11 @@ warningGrandChild: 0,
 skipGrandChild: 0,
 infoGrandChild: 0,
 eventsCount: 5,
-passEvents: 2,
-failEvents: 0,
+passEvents: 1,
+failEvents: 1,
 warningEvents: 0,
 skipEvents: 0,
-infoEvents: 3
+infoEvents: 6
 };
 </script>        </div>
       </div>

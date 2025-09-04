@@ -38,24 +38,36 @@ public class ElementUtil {
         return getElement(locator).getText();
     }
 
-    public boolean waitForElementToBeVisible(By locator, int timeoutInSeconds){
-        WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
-        customWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        return false;
-    }
-
-    public void waitForElementToBeClickable(By locator, int timeoutInSeconds){
-        WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
-        customWait.until(ExpectedConditions.elementToBeClickable(locator));
-    }
-
-    public List<WebElement> getElements(By locator) {
+    public boolean waitForElementToBeVisible(By locator, int timeoutInSeconds) {
         try {
-            return driver.findElements(locator);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to retrieve element list: " + locator);
+            WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+            customWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
         }
     }
+
+
+        public boolean waitForElementToBeClickable(By locator, int timeoutInSeconds){
+            try {
+                WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+                customWait.until(ExpectedConditions.elementToBeClickable(locator));
+                return true;
+            } catch (TimeoutException e) {
+                System.out.println("Element tıklanabilir olmadı: " + locator);
+                return false;
+            }
+        }
+
+    public List<WebElement> getElements(By locator) {
+        List<WebElement> elements = driver.findElements(locator);
+        if (elements.isEmpty()) {
+            System.out.println("Failed to retrieve element list: " + locator);
+        }
+        return elements;
+    }
+}
 
    /* *//**
      * Alert var mı kontrol eder
@@ -78,4 +90,4 @@ public class ElementUtil {
         }
     }
 */
-}
+

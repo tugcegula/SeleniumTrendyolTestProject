@@ -1,21 +1,62 @@
 package com.trendyol.tests;
 
+import com.trendyol.pages.AddToCart;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import java.time.Duration;
 import java.util.List;
 
-public class AddToCardTest extends BaseTest{
+import static org.testng.Assert.assertTrue;
+
+public class AddToCardTest extends BasePageTest {
+
+    private AddToCart addToCartPage;
+
+    @BeforeClass
+    public void setUp() {
+        // Initialize AddToCart page before the test starts
+        addToCartPage = new AddToCart(driver);
+        logger.info("AddToCart page has been initialized.");
+    }
     @Test
     public void testAddProductToCart() {
-        //driver.navigate().refresh();
+        String productName = "Ayakkabı";  // The product to search for
+
+        // 1. Perform product search
+        addToCartPage.searchProduct(productName);
+        logger.info("Product search performed: " + productName);
+
+        // 2. Select the product (first product in the list)
+        addToCartPage.selectProduct(0);
+        logger.info("First product selected.");
+
+        // 3. Close the address confirmation popup (if it appears)
+        addToCartPage.closeAddressPopupIfPresent();
+
+        // 4. Select size (if available)
+        addToCartPage.selectSizeIfAvailable();
+
+        // 5. Add the product to the cart
+        addToCartPage.addToCart();
+        logger.info("Product has been added to the cart.");
+
+        // 6. Go to the cart
+        addToCartPage.goToCart();
+        logger.info("Navigated to the cart.");
+
+        // 7. Verify if the product is in the cart
+        boolean isProductInCart = addToCartPage.isProductInCart();
+        assertTrue(isProductInCart, "Product could not be added to the cart!");
+        logger.info("Product successfully found in the cart.");
+
+
+       /* //driver.navigate().refresh();
         // 1. Ana sayfa zaten açık (BaseTest'te driver.get() ile açılıyor)
 
         // 2. Ürün arama
@@ -39,14 +80,17 @@ public class AddToCardTest extends BaseTest{
 
         // 5. Varsa beden seç, sonra Sepete Ekle butonuna bas
         try {
-            WebElement addressApprovalButton = driver.findElement(By.cssSelector("button.onboarding__default-renderer-primary-button"));
-            WebDriverWait wait = new WebDriverWait(driver, 5);
-            wait.until(ExpectedConditions.visibilityOfElementLocated((By) addressApprovalButton));
+            By addressApprovalBy =  By.cssSelector("button.onboarding__default-renderer-primary-button");
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            WebElement addressApprovalButton = wait.until(ExpectedConditions.visibilityOfElementLocated(addressApprovalBy));
             addressApprovalButton.click();
             logger.info("Adres onay popup'ı kapatıldı.");
         } catch (TimeoutException e) {
             logger.info("Adres onay popup'ı görünmedi, devam ediliyor.");
+        } catch (Exception e) {
+            logger.error("Adres onay popup'ı kapatılırken hata oluştu: ", e);
         }
+
         try {
             WebElement sliderContainer = driver.findElement(By.cssSelector("div.slider__container"));
             List<WebElement> sizes = sliderContainer.findElements(By.cssSelector("button[data-testid='size-box']"));
@@ -64,15 +108,16 @@ public class AddToCardTest extends BaseTest{
         logger.info("Ürün sepete eklendi.");
 
         // 7. Sepete git
-        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
         WebElement goToCartBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.redirect-to-basket")));
         goToCartBtn.click();
         logger.info("Sepete gidildi.");
 
 
         // 8. Sepette ürünün olup olmadığını doğrula
-        List<WebElement> cartProducts = driver.findElements(By.cssSelector("div.pb-basket-item-wrapper-v2"));
-
+        List<WebElement> cartProducts = driver.findElements(
+                By.cssSelector(".pb-basket-item-wrapper-v2")
+        );
         if (!cartProducts.isEmpty()) {
             logger.info("Sepette " + cartProducts.size() + " ürün var.");
             //WebElement firstProduct = cartProducts.get(0);
@@ -81,7 +126,7 @@ public class AddToCardTest extends BaseTest{
             logger.warn("Sepet boş.");
         }
 
-        Assert.assertFalse(cartProducts.isEmpty(), "Sepette ürün bulunamadı! Ürün sepete eklenememiş olabilir.");
-        logger.info("Ürün sepette başarıyla bulundu.");
+      // Assert.assertFalse(cartProducts.isEmpty(), "Sepette ürün bulunamadı! Ürün sepete eklenememiş olabilir.");
+        logger.info("Ürün sepette başarıyla bulundu.");*/
     }
 }

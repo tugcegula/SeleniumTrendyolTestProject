@@ -1,9 +1,11 @@
 package com.trendyol.pages;
 
 import com.trendyol.utils.ElementUtil;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.apache.logging.log4j.Logger;
 
 import java.time.Duration;
 
@@ -12,11 +14,12 @@ public class BasePage {
     protected WebDriver driver;
     protected ElementUtil elementUtil;
     protected WebDriverWait wait;
+    protected static final Logger logger = LogManager.getLogger(BasePage.class);
 
-    public BasePage(WebDriver webDriver) {
+    public BasePage(WebDriver driver) {
         this.driver = driver;
         this.elementUtil =  new ElementUtil(driver);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10) );
+        this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(10) );
     }
 
     /**
