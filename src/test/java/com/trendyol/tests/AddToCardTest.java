@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Set;
 
 import static org.testng.Assert.assertTrue;
 
@@ -36,8 +37,22 @@ public class AddToCardTest extends BasePageTest {
         addToCartPage.selectProduct(0);
         logger.info("First product selected.");
 
-        // 3. Close the address confirmation popup (if it appears)
-        addToCartPage.closeAddressPopupIfPresent();
+        String mainWindow = driver.getWindowHandle();
+
+// Yeni sekmeye geçiş yapmak için tüm pencereleri al
+        Set<String> allWindows = driver.getWindowHandles();
+
+// Yeni sekmeye geçiş yap
+        for (String window : allWindows) {
+            if (!window.equals(mainWindow)) {
+                driver.switchTo().window(window);  // Yeni sekmeye geç
+                break;
+            }
+        }
+
+//        // 3. Close the address confirmation popup (if it appears)
+         addToCartPage.closeAddressPopupIfPresent();
+
 
         // 4. Select size (if available)
         addToCartPage.selectSizeIfAvailable();

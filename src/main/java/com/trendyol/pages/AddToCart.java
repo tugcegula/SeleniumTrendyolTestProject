@@ -15,7 +15,7 @@ public class AddToCart extends BasePage {
     private By searchBox = By.cssSelector("input[data-testid='suggestion']");
     private By product = By.cssSelector("div.p-card-wrppr.with-campaign-view a");
     private By searchButton = By.cssSelector("i[data-testid='search-icon']");
-    private  By addressApprovalButton =  By.xpath("//button[text()='Anladım']");
+    private By addressApprovalButton = By.cssSelector(".onboarding__default-renderer-primary-button");
     private By addToBasketButton = By.cssSelector("button[data-testid='add-to-cart-button']");
     private By goToCartButton = By.cssSelector("a.redirect-to-basket");
     private By sizeSelector = By.cssSelector("button[data-testid='size-box']");
@@ -34,15 +34,18 @@ public class AddToCart extends BasePage {
         List<WebElement> products = elementUtil.getElements(product);
 
         if (index >= 0 && index < products.size()) {
-            elementUtil.waitForElementToBeVisible(product, 5);
+            elementUtil.waitForElementToBeVisible(product, 15);
             products.get(index).click();
         } else {
             throw new IllegalArgumentException("Invalid product index " + index);
         }
     }
 
+
+
+
     public void addToCart() {
-        elementUtil.waitForElementToBeClickable(addToBasketButton, 5);
+        elementUtil.waitForElementToBeClickable(addToBasketButton, 15);
         elementUtil.doClick(addToBasketButton);
     }
 
@@ -60,15 +63,15 @@ public class AddToCart extends BasePage {
 //        WebElement addressApproval = driver.findElement(addressApprovalButton);
 //        addressApproval.click();
 
-            try {
-                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-                WebElement button = wait.until(ExpectedConditions.elementToBeClickable(addressApprovalButton));
-                button.click();
-                System.out.println("Adres onay popup'ı kapatıldı.");
-            } catch (TimeoutException e) {
-                System.out.println("Adres onay popup'ı görünmedi, devam ediliyor.");
-
-            }
+//            try {
+              //  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement button = driver.findElement(addressApprovalButton);
+        button.click();
+//                System.out.println("Adres onay popup'ı kapatıldı.");
+//            } catch (TimeoutException e) {
+//                System.out.println("Adres onay popup'ı görünmedi, devam ediliyor.");
+//
+//            }
 //        try {
 //            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 //            WebElement addressApproval = wait.until(ExpectedConditions.elementToBeClickable(addressApprovalButton));
