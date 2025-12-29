@@ -13,13 +13,13 @@ import java.util.List;
 public class AddToCart extends BasePage {
 
     private By searchBox = By.cssSelector("input[data-testid='suggestion']");
-    private By product = By.cssSelector("div.p-card-wrppr.with-campaign-view a");
+    private By product = By.cssSelector("div.search-result-content a");
     private By searchButton = By.cssSelector("i[data-testid='search-icon']");
     private By addressApprovalButton = By.cssSelector(".onboarding__default-renderer-primary-button");
     private By addToBasketButton = By.cssSelector("button[data-testid='add-to-cart-button']");
     private By goToCartButton = By.cssSelector("a.redirect-to-basket");
     private By sizeSelector = By.cssSelector("button[data-testid='size-box']");
-    private By cartItems = By.cssSelector(".pb-basket-item-wrapper-v2");
+    private By cartItems = By.cssSelector("div.merchant-item-container");
 
     public AddToCart(WebDriver driver) {
         super(driver);
@@ -55,6 +55,7 @@ public class AddToCart extends BasePage {
 
     public boolean isProductInCart() {
         List<WebElement> cartItemsList = elementUtil.getElements(cartItems);
+        elementUtil.waitForElementToBeVisible( cartItems, 15);
         return !cartItemsList.isEmpty();
     }
 

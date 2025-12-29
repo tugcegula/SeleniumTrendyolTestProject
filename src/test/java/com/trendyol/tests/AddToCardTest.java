@@ -34,7 +34,7 @@ public class AddToCardTest extends BasePageTest {
         logger.info("Product search performed: " + productName);
 
         // 2. Select the product (first product in the list)
-        addToCartPage.selectProduct(0);
+        addToCartPage.selectProduct(5);
         logger.info("First product selected.");
 
         String mainWindow = driver.getWindowHandle();
