@@ -1,9 +1,6 @@
 package com.trendyol.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -12,7 +9,8 @@ import java.util.List;
 
 public class AddToCart extends BasePage {
 
-    private By searchBox = By.cssSelector("input[data-testid='suggestion']");
+     private By searchBox2 = By.cssSelector("input[data-testid='suggestion']");
+     private By searchBox = By.cssSelector("button[data-testid='suggestion-placeholder']");
     private By product = By.cssSelector("div.search-result-content a");
     private By searchButton = By.cssSelector("i[data-testid='search-icon']");
     private By addressApprovalButton = By.cssSelector(".onboarding__default-renderer-primary-button");
@@ -26,8 +24,12 @@ public class AddToCart extends BasePage {
     }
 
     public void searchProduct(String productName) {
-        elementUtil.doSendKeys(searchBox, productName);
-        elementUtil.doClick(searchButton);
+
+        elementUtil.waitForElementToBeClickable(searchBox,10);
+        driver.findElement(searchBox).click();
+
+        elementUtil.doSendKeys(searchBox2, productName + Keys.ENTER);
+        //elementUtil.doClick(searchButton);
     }
 
     public void selectProduct(int index) {

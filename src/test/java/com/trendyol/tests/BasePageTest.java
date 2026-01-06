@@ -11,6 +11,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -66,6 +67,7 @@ public class BasePageTest {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             logger.info("ChromeDriver başlatıldı.");
+
         }
         basePage = new BasePage(driver);
     }
@@ -75,6 +77,12 @@ public class BasePageTest {
         extentTest = extentReports.createTest(method.getName());
         logger.info("Test başlıyor: " + method.getName());
         driver.get(ConfigReader.get("baseUrl"));
+        ((JavascriptExecutor) driver).executeScript(
+                "localStorage.setItem('gender_modal_show_count', '2');"
+        );
+
+// Sayfayı yenile → state uygulanır
+        driver.navigate().refresh();
         closeInitialPopups();
         loginPage = new LoginPage(driver);
         basePage = new BasePage(driver);
@@ -102,11 +110,11 @@ public class BasePageTest {
         Assert.assertTrue(url.contains("trendyol"));
         extentTest.info("URL kontrolü başarılı: " + url);
 
-        basePage.refreshPage();
-        extentTest.info("Sayfa yenilendi");
+//        basePage.refreshPage();
+//        extentTest.info("Sayfa yenilendi");
 
-        basePage.navigateBack();
-        extentTest.info("Geriye navigasyon yapıldı");
+//        basePage.navigateBack();
+//        extentTest.info("Geriye navigasyon yapıldı");
     }
 
     @AfterMethod
@@ -150,15 +158,17 @@ public class BasePageTest {
             logger.warn("Çerez popup'ı bulunamadı.");
         }
 
-        // Cinsiyet popup'ı
-        try {
-            By genderClose = By.cssSelector("div.modal-close");
-            WebElement closeBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(genderClose));
-            closeBtn.click();
-            logger.info("Cinsiyet popup'ı kapatıldı.");
-        } catch (Exception e) {
-            logger.warn("Cinsiyet popup'ı bulunamadı.");
-        }
+//        // Cinsiyet popup'ı
+//        try {
+//           // By genderClose = By.cssSelector("div.modal-section-close");
+////            By kadinButton = By.xpath("//div[@class='modal-action-button' and text()='Kadın']");
+////            WebElement closeBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(kadinButton));
+////            closeBtn.click();
+//
+//            logger.info("Cinsiyet popup'ı kapatıldı.");
+//        } catch (Exception e) {
+//            logger.warn("Cinsiyet popup'ı bulunamadı.");
+//        }
     }
 
     public boolean isLoggedIn() {

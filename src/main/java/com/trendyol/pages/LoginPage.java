@@ -12,7 +12,7 @@ public class LoginPage extends BasePage{
 
 
     // Elementler
-    private By loginButtonOnHomePage = By.cssSelector("p.link-text");// giriş butonu
+    private By loginButtonOnHomePage = By.xpath("//p[@class='user-text navigation-text' and text()='Giriş Yap']");// giriş butonu
     private By emailField = By.id("login-email");
     private By passwordField = By.id("login-password-input");
     private By loginButton = By.cssSelector("button.q-button.submit");
