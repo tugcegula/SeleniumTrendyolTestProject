@@ -18,11 +18,12 @@ public class FilterByCostTest extends BasePageTest {
     }
 
     @Test
-    public void testAddProductToCart() {
-        String productName = "Ayakkabı";  // The product to search for
+    public void testAddProductToCart() throws InterruptedException {
+        String productName = "Kazak";  // The product to search for
+        String brandName = "Pull & Bear";  // The product to search for
 
         // 1. Perform product search
-        filterByCost.searchProduct(productName);
+        filterByCost.searchProduct(productName,brandName);
         logger.info("Product search performed: " + productName);
     }
 

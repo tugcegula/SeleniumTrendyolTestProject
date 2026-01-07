@@ -9,8 +9,8 @@ import java.util.List;
 
 public class AddToCart extends BasePage {
 
-     private By searchBox2 = By.cssSelector("input[data-testid='suggestion']");
-     private By searchBox = By.cssSelector("button[data-testid='suggestion-placeholder']");
+    private By searchBox2 = By.cssSelector("input[data-testid='suggestion']");
+    private By searchBox = By.cssSelector("button[data-testid='suggestion-placeholder']");
     private By product = By.cssSelector("div.search-result-content a");
     private By searchButton = By.cssSelector("i[data-testid='search-icon']");
     private By addressApprovalButton = By.cssSelector(".onboarding__default-renderer-primary-button");
@@ -27,7 +27,6 @@ public class AddToCart extends BasePage {
 
         elementUtil.waitForElementToBeClickable(searchBox,10);
         driver.findElement(searchBox).click();
-
         elementUtil.doSendKeys(searchBox2, productName + Keys.ENTER);
         //elementUtil.doClick(searchButton);
     }
