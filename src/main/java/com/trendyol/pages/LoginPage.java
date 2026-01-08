@@ -26,10 +26,12 @@ public class LoginPage extends BasePage{
     }
 
     public void enterEmail(String email) {
+        elementUtil.waitForElementToBeClickable(emailField,10);
         elementUtil.doSendKeys(emailField, email);
     }
 
     public void enterPassword(String password) {
+        elementUtil.waitForElementToBeClickable(passwordField,10);
         elementUtil.doSendKeys(passwordField, password);
     }
 

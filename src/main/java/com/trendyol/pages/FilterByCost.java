@@ -11,7 +11,7 @@ public class FilterByCost extends BasePage {
     private By searchButton = By.cssSelector("[data-testid='search-submit-button']");
     private By searchBrand = By.id("web-search-input");
     private By brand = By.xpath("//span[@class='checkbox-label' and text()='Pull & Bear']");
-   // private By price = By.xpath("//button[@type='button' and @aria-label='Open Fiyat filters']");
+    //private By price = By.cssSelector("(//button[@aria-label='Open Fiyat filters'] )");
 
 
 

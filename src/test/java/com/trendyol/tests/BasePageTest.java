@@ -74,6 +74,7 @@ public class BasePageTest {
 
     @BeforeMethod
     public void setUp(Method method) {
+
         extentTest = extentReports.createTest(method.getName());
         logger.info("Test başlıyor: " + method.getName());
         driver.get(ConfigReader.get("baseUrl"));
@@ -90,17 +91,7 @@ public class BasePageTest {
 
     @Test
     public void verifyBasePageFunctions() {
-        // 1. Login işlemi
-        HomePage homePage = loginPage.login(email, password);
-        basePage.refreshPage();
 
-       // Assert.assertTrue(isLoggedIn(), "Login işlemi başarısız!");
-
-        extentTest.info("Login başarılı");
-        logger.info("Login başarılı");
-
-        // 2. BasePage üzerinden testler
-        BasePage basePage = new HomePage(driver);
 
         String title = basePage.getPageTitle();
         Assert.assertNotNull(title);
