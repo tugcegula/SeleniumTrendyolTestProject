@@ -22,6 +22,7 @@ public class LoginPage extends BasePage{
         super(driver);
     }
     public void openLoginPage() {
+        elementUtil.waitForElementToBeClickable(loginButtonOnHomePage, 15);
         driver.findElement(loginButtonOnHomePage).click();
     }
 
@@ -36,7 +37,7 @@ public class LoginPage extends BasePage{
     }
 
     public void clickLogin() {
-        elementUtil.waitForElementToBeVisible(loginButton, 15);
+        elementUtil.waitForElementToBeClickable(loginButton, 15);
         elementUtil.doClick(loginButton);
     }
 

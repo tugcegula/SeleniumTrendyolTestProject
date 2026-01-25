@@ -9,7 +9,7 @@ public class FilterByCost extends BasePage {
     private By searchBox2 = By.cssSelector("input[data-testid='suggestion']");
     private By searchBox = By.cssSelector("button[data-testid='suggestion-placeholder']");
     private By searchButton = By.cssSelector("[data-testid='search-submit-button']");
-    private By searchBrand = By.id("web-search-input");
+    private By searchBrand = By.id("web-search-input--103");
     private By brand = By.xpath("//span[@class='checkbox-label' and text()='Pull & Bear']");
     //private By price = By.cssSelector("(//button[@aria-label='Open Fiyat filters'] )");
 

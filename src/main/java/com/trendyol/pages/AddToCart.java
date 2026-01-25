@@ -27,6 +27,7 @@ public class AddToCart extends BasePage {
 
         elementUtil.waitForElementToBeClickable(searchBox,10);
         driver.findElement(searchBox).click();
+        elementUtil.waitForElementToBeClickable(searchBox2,10);
         elementUtil.doSendKeys(searchBox2, productName + Keys.ENTER);
         //elementUtil.doClick(searchButton);
     }
@@ -51,6 +52,7 @@ public class AddToCart extends BasePage {
     }
 
     public void goToCart() {
+        elementUtil.waitForElementToBeClickable(goToCartButton, 15);
         elementUtil.doClick(goToCartButton);
     }
 
@@ -66,7 +68,7 @@ public class AddToCart extends BasePage {
 //        addressApproval.click();
 
 //            try {
-              //  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement button = driver.findElement(addressApprovalButton);
         button.click();
 //                System.out.println("Adres onay popup'ı kapatıldı.");
@@ -89,6 +91,7 @@ public class AddToCart extends BasePage {
     // Select size if available
     public void selectSizeIfAvailable() {
         try {
+            elementUtil.waitForElementToBeClickable(sizeSelector, 15);
             List<WebElement> sizes = elementUtil.getElements(sizeSelector);
             if (!sizes.isEmpty()) {
                 sizes.get(0).click();

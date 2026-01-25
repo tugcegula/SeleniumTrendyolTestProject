@@ -10,14 +10,15 @@ public class LoginPageTest extends BasePageTest {
 
     @Test
     public void invalidLoginTest() throws InterruptedException {
-
+        email = ConfigReader.get("email");
+        password = ConfigReader.get("password");
         // 1. Login işlemi
         HomePage homePage = loginPage.login(email, password);
         //basePage.refreshPage();
         // Assert.assertTrue(isLoggedIn(), "Login işlemi başarısız!");
         // 2. BasePage üzerinden testler
-        BasePage basePage = new HomePage(driver);
-        email = ConfigReader.get("username");
+//        BasePage basePage = new HomePage(driver);
+        email = ConfigReader.get("email");
         password = ConfigReader.get("password");
         //LoginPage loginPage = new LoginPage(driver);
         extentTest.info("Login başarılı");
