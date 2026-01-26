@@ -68,9 +68,12 @@ public class AddToCart extends BasePage {
 //        addressApproval.click();
 
 //            try {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        elementUtil.waitForElementToBeClickable(addressApprovalButton,10);
+        elementUtil.doClick(addressApprovalButton);
+        /*WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement button = driver.findElement(addressApprovalButton);
-        button.click();
+        button.click();*/
 //                System.out.println("Adres onay popup'ı kapatıldı.");
 //            } catch (TimeoutException e) {
 //                System.out.println("Adres onay popup'ı görünmedi, devam ediliyor.");
