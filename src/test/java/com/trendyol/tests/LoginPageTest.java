@@ -4,6 +4,7 @@ import com.trendyol.pages.BasePage;
 import com.trendyol.pages.HomePage;
 import com.trendyol.pages.LoginPage;
 import com.trendyol.utils.ConfigReader;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class LoginPageTest extends BasePageTest {
@@ -21,9 +22,13 @@ public class LoginPageTest extends BasePageTest {
         email = ConfigReader.get("email");
         password = ConfigReader.get("password");
         //LoginPage loginPage = new LoginPage(driver);
+        Assert.assertEquals(
+                loginPage.getHesabimText().trim(),
+                "Hesabım",
+                "Login başarısız!"
+        );
         extentTest.info("Login başarılı");
         logger.info("Login başarılı");
-
 
         //boolean loginSuccessful = loginPage.login(email, password);
 

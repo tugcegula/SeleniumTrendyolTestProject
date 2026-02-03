@@ -16,7 +16,9 @@ public class LoginPage extends BasePage{
     private By emailField = By.id("login-email");
     private By passwordField = By.id("login-password-input");
     private By loginButton = By.cssSelector("button.q-button.submit");
-  //  private By errorMessage = By.cssSelector(".message"); // Hatalı giriş mesajı için
+    private By profileIcon = By.cssSelector("user-menu");
+    private By hesabimText = By.xpath("//p[contains(@class,'navigation-text') and contains(text(),'Hesabım')]");
+    //  private By errorMessage = By.cssSelector(".message"); // Hatalı giriş mesajı için
     //*[@id="login-register"]/div[3]/div[1]/form/button
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -27,12 +29,12 @@ public class LoginPage extends BasePage{
     }
 
     public void enterEmail(String email) {
-        elementUtil.waitForElementToBeClickable(emailField,10);
+        elementUtil.waitForElementToBeVisible(emailField,10);
         elementUtil.doSendKeys(emailField, email);
     }
 
     public void enterPassword(String password) {
-        elementUtil.waitForElementToBeClickable(passwordField,10);
+        elementUtil.waitForElementToBeVisible(passwordField,10);
         elementUtil.doSendKeys(passwordField, password);
     }
 
@@ -41,13 +43,34 @@ public class LoginPage extends BasePage{
         elementUtil.doClick(loginButton);
     }
 
+    public boolean isLoggedIn() {
+        return elementUtil.waitForElementToBeVisible(profileIcon, 5);
+    }
+
+    public void waitUntilReady() {
+        elementUtil.waitForElementToBeVisible(profileIcon, 15);
+    }
+    public String getHesabimText() {
+        elementUtil.waitForElementToBeVisible(hesabimText, 10);
+        return driver.findElement(hesabimText).getText();
+
+    }
     public HomePage login(String email, String password) {
         openLoginPage();
-        enterEmail(email);
-        enterPassword(password);
-        clickLogin();
+
+        //if (!isLoggedIn()) {
+            enterEmail(email);
+            enterPassword(password);
+            clickLogin();
+           // waitUntilReady();
+           // getHesabimText();
+       // }
+       /// elementUtil.waitForUrlContains("/home", 15);
         return new HomePage(driver);
     }
+
+
+
     /*public void openLoginPage() {
         driver.findElement(loginButtonOnHomePage).click();
     }

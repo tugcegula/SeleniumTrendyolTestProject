@@ -27,6 +27,7 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class BasePageTest {
     protected static WebDriver driver;
@@ -87,7 +88,26 @@ public class BasePageTest {
         closeInitialPopups();
         loginPage = new LoginPage(driver);
         basePage = new BasePage(driver);
+        checkLogin();
     }
+
+    public void checkLogin() {
+        if (!isUserLoggedIn()) {
+            email = ConfigReader.get("email");
+            password = ConfigReader.get("password");
+            loginPage.login(email, password);
+        }
+    }
+
+    public boolean isUserLoggedIn() {
+        try {
+            WebElement accountElement = driver.findElement(By.xpath("//p[contains(@class,'navigation-text') and contains(text(),'Hesabım')]"));
+            return accountElement.getText().equalsIgnoreCase("Hesabım");
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 
     @Test
     public void verifyBasePageFunctions() {
@@ -162,12 +182,5 @@ public class BasePageTest {
 //        }
     }
 
-    public boolean isLoggedIn() {
-        try {
-            WebElement accountElement = driver.findElement(By.cssSelector("p.link-text"));
-            return accountElement.getText().equalsIgnoreCase("Hesabım");
-        } catch (Exception e) {
-            return false;
-        }
-    }
+
 }
