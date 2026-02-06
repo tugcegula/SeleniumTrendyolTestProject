@@ -21,7 +21,7 @@ public class FilterByCost extends BasePage {
 
     public void searchProduct(String productName,String brandName) throws InterruptedException {
 
-        elementUtil.waitForElementToBeClickable(searchBox,10);
+        elementUtil.waitForElementToBeClickable(searchBox,15);
         driver.findElement(searchBox).click();
         elementUtil.doSendKeys(searchBox2, productName + Keys.ENTER);
         elementUtil.waitForElementToBeClickable(searchBrand,10);

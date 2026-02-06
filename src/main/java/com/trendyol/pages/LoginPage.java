@@ -1,8 +1,10 @@
 package com.trendyol.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -12,10 +14,15 @@ public class LoginPage extends BasePage{
 
 
     // Elementler
-    private By loginButtonOnHomePage = By.xpath("//p[@class='user-text navigation-text' and text()='Giriş Yap']");// giriş butonu
-    private By emailField = By.id("login-email");
+    private By loginButtonOnHomePage = By.cssSelector("div.navigation-menu-user");
+            //By.xpath("//p[@class='user-text navigation-text' and text()='Giriş Yap']");// giriş butonu
+    private By loginWrapper = By.cssSelector("login-register-wrapper");
+    private By emailField = By.id("email-input");
+    private By devamButton = By.cssSelector("button.email-check-button");
+            //By.id("login-email");
     private By passwordField = By.id("login-password-input");
-    private By loginButton = By.cssSelector("button.q-button.submit");
+   // private By loginButton = By.cssSelector("button.q-button.submit");
+    private By loginButton = By.cssSelector("button.login-button");
     private By profileIcon = By.cssSelector("user-menu");
     private By hesabimText = By.xpath("//p[contains(@class,'navigation-text') and contains(text(),'Hesabım')]");
     //  private By errorMessage = By.cssSelector(".message"); // Hatalı giriş mesajı için
@@ -24,13 +31,23 @@ public class LoginPage extends BasePage{
         super(driver);
     }
     public void openLoginPage() {
-        elementUtil.waitForElementToBeClickable(loginButtonOnHomePage, 15);
-        driver.findElement(loginButtonOnHomePage).click();
+        WebElement loginButtonOnHomePage2 = driver.findElement(By.cssSelector("div.navigation-menu-user"));
+        //elementUtil.waitForLoaderToDisappear(15);
+        /*elementUtil.waitForElementToBeClickable(loginButtonOnHomePage, 15);
+        elementUtil.waitForElementToBeVisible(loginWrapper, 15);*/
+       /* Actions actions = new Actions(driver);
+        actions.moveToElement(loginButtonOnHomePage2).click();*/
+      //  elementUtil.doClick(loginButtonOnHomePage);
+        elementUtil.jsClick(
+                By.cssSelector("div.navigation-menu-user")
+        );
     }
 
     public void enterEmail(String email) {
         elementUtil.waitForElementToBeVisible(emailField,10);
         elementUtil.doSendKeys(emailField, email);
+        elementUtil.waitForElementToBeClickable(devamButton,10);
+        elementUtil.doClick(devamButton);
     }
 
     public void enterPassword(String password) {
@@ -39,7 +56,6 @@ public class LoginPage extends BasePage{
     }
 
     public void clickLogin() {
-        elementUtil.waitForElementToBeClickable(loginButton, 15);
         elementUtil.doClick(loginButton);
     }
 
@@ -59,10 +75,11 @@ public class LoginPage extends BasePage{
         openLoginPage();
 
         //if (!isLoggedIn()) {
+
             enterEmail(email);
             enterPassword(password);
             clickLogin();
-           // waitUntilReady();
+            waitUntilReady();
            // getHesabimText();
        // }
        /// elementUtil.waitForUrlContains("/home", 15);

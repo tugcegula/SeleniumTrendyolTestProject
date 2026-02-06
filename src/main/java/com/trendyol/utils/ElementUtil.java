@@ -49,17 +49,35 @@ public class ElementUtil {
     }
 
 
-        public boolean waitForElementToBeClickable(By locator, int timeoutInSeconds){
-            try {
-                WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
-                customWait.until(ExpectedConditions.elementToBeClickable(locator));
-                return true;
-            } catch (TimeoutException e) {
-                System.out.println("Element tıklanabilir olmadı: " + locator);
-                return false;
-            }
+    public boolean waitForElementToBeClickable(By locator, int timeoutInSeconds){
+        try {
+            WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+            customWait.until(ExpectedConditions.elementToBeClickable(locator));
+            return true;
+        } catch (TimeoutException e) {
+            System.out.println("Element tıklanabilir olmadı: " + locator);
+            return false;
         }
+    }
 
+    public void jsClick(By locator) {
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement element = wait.until(
+                ExpectedConditions.presenceOfElementLocated(locator)
+        );
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", element);
+    }
+
+//    public void waitForLoaderToDisappear(int timeout) {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+//        By loader = By.cssSelector("div.poseidon-loader-container");
+//
+//        wait.until(ExpectedConditions.invisibilityOfElementLocated(loader));
+//    }
     public List<WebElement> getElements(By locator) {
         List<WebElement> elements = driver.findElements(locator);
         if (elements.isEmpty()) {

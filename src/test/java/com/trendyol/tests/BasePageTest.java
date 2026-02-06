@@ -41,6 +41,8 @@ public class BasePageTest {
     protected String email;
     protected String password;
 
+    /* -------------------- BEFORE SUITE -------------------- */
+
     @BeforeSuite
     public void beforeSuite() {
         Locale.setDefault(Locale.ENGLISH);
@@ -48,19 +50,22 @@ public class BasePageTest {
         logger.info("ExtentReports ve Locale ayarlandı.");
     }
 
+    /* -------------------- BEFORE TEST -------------------- */
+
     @BeforeTest
     public void setUpTest() {
-        email = ConfigReader.get("email");
-        password = ConfigReader.get("password");
+
+
 
         String browser = ConfigReader.get("browser");
 
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
-            ChromeOptions options = new ChromeOptions();
 
+
+            ChromeOptions options = new ChromeOptions();
             Map<String, Object> prefs = new HashMap<>();
-            prefs.put("profile.default_content_setting_values.notifications", 2); // Bildirimleri engelle
+            prefs.put("profile.default_content_setting_values.notifications", 2);
             options.setExperimentalOption("prefs", prefs);
 
             driver = new ChromeDriver(options);
@@ -68,50 +73,47 @@ public class BasePageTest {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             logger.info("ChromeDriver başlatıldı.");
-
         }
-        basePage = new BasePage(driver);
     }
 
-    @BeforeMethod
-    public void setUp(Method method) {
+    /* -------------------- BEFORE CLASS -------------------- */
 
-        extentTest = extentReports.createTest(method.getName());
-        logger.info("Test başlıyor: " + method.getName());
+    @BeforeClass
+    public void setUpClass() {
+        email = ConfigReader.get("email");
+        password = ConfigReader.get("password");
         driver.get(ConfigReader.get("baseUrl"));
+
         ((JavascriptExecutor) driver).executeScript(
                 "localStorage.setItem('gender_modal_show_count', '2');"
         );
 
-// Sayfayı yenile → state uygulanır
         driver.navigate().refresh();
+
         closeInitialPopups();
+
         loginPage = new LoginPage(driver);
         basePage = new BasePage(driver);
+
+
+
+        //logger.info("BeforeClass tamamlandı: popup kapandı, login yapıldı.");
+    }
+
+    /* -------------------- BEFORE METHOD -------------------- */
+
+    @BeforeMethod
+    public void setUp(Method method) {
+        extentTest = extentReports.createTest(method.getName());
+        logger.info("Test başlıyor: " + method.getName());
+
         checkLogin();
     }
 
-    public void checkLogin() {
-        if (!isUserLoggedIn()) {
-            email = ConfigReader.get("email");
-            password = ConfigReader.get("password");
-            loginPage.login(email, password);
-        }
-    }
-
-    public boolean isUserLoggedIn() {
-        try {
-            WebElement accountElement = driver.findElement(By.xpath("//p[contains(@class,'navigation-text') and contains(text(),'Hesabım')]"));
-            return accountElement.getText().equalsIgnoreCase("Hesabım");
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
+    /* -------------------- TEST -------------------- */
 
     @Test
     public void verifyBasePageFunctions() {
-
 
         String title = basePage.getPageTitle();
         Assert.assertNotNull(title);
@@ -120,16 +122,13 @@ public class BasePageTest {
         String url = basePage.getCurrentUrl();
         Assert.assertTrue(url.contains("trendyol"));
         extentTest.info("URL kontrolü başarılı: " + url);
-
-//        basePage.refreshPage();
-//        extentTest.info("Sayfa yenilendi");
-
-//        basePage.navigateBack();
-//        extentTest.info("Geriye navigasyon yapıldı");
     }
+
+    /* -------------------- AFTER METHOD -------------------- */
 
     @AfterMethod
     public void tearDown(ITestResult result) {
+
         if (result.getStatus() == ITestResult.FAILURE) {
             extentTest.fail("Test FAILED: " + result.getThrowable());
             logger.error("Test FAILED:", result.getThrowable());
@@ -138,17 +137,20 @@ public class BasePageTest {
         } else if (result.getStatus() == ITestResult.SKIP) {
             extentTest.skip("Test SKIPPED");
         }
-        // driver.quit() burada değil. Suite sonunda kapatılıyor
     }
+
+    /* -------------------- AFTER TEST -------------------- */
 
     @AfterTest
     public void tearDownTest() {
+
         if (driver != null) {
             driver.quit();
             logger.info("Tarayıcı kapatıldı.");
-            extentTest.info("Tarayıcı kapatıldı.");
         }
     }
+
+    /* -------------------- AFTER SUITE -------------------- */
 
     @AfterSuite
     public void tearDownSuite() {
@@ -156,31 +158,38 @@ public class BasePageTest {
         logger.info("ExtentReports flushlandı.");
     }
 
+    /* -------------------- HELPER METHODS -------------------- */
+
+    public void checkLogin() {
+        if (!isUserLoggedIn()) {
+            loginPage.login(email, password);
+            logger.info("Login işlemi gerçekleştirildi.");
+        }
+    }
+
+    public boolean isUserLoggedIn() {
+        try {
+            WebElement accountElement = driver.findElement(
+                    By.xpath("//p[contains(@class,'navigation-text') and contains(text(),'Hesabım')]")
+            );
+            return accountElement.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public void closeInitialPopups() {
+
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
-        // Çerez popup'ı
         try {
             By cookieBtn = By.id("onetrust-reject-all-handler");
-            wait.until(driver -> driver.findElement(cookieBtn).isDisplayed());
+            wait.until(d -> d.findElement(cookieBtn).isDisplayed());
             driver.findElement(cookieBtn).click();
             logger.info("Çerez popup'ı kapatıldı.");
         } catch (Exception e) {
             logger.warn("Çerez popup'ı bulunamadı.");
         }
-
-//        // Cinsiyet popup'ı
-//        try {
-//           // By genderClose = By.cssSelector("div.modal-section-close");
-////            By kadinButton = By.xpath("//div[@class='modal-action-button' and text()='Kadın']");
-////            WebElement closeBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(kadinButton));
-////            closeBtn.click();
-//
-//            logger.info("Cinsiyet popup'ı kapatıldı.");
-//        } catch (Exception e) {
-//            logger.warn("Cinsiyet popup'ı bulunamadı.");
-//        }
     }
-
-
 }
+
