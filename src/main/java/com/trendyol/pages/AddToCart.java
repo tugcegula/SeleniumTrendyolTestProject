@@ -6,12 +6,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Random;
 
 public class AddToCart extends BasePage {
 
     private By searchBox2 = By.cssSelector("input[data-testid='suggestion']");
     private By searchBox = By.cssSelector("button[data-testid='suggestion-placeholder']");
-    private By product = By.cssSelector("div.search-result-content a");
+    private By product = By.cssSelector("a.product-card[data-testid='product-card']");
     private By searchButton = By.cssSelector("i[data-testid='search-icon']");
     private By addressApprovalButton = By.cssSelector(".onboarding__default-renderer-primary-button");
     private By addToBasketButton = By.cssSelector("button[data-testid='add-to-cart-button']");
@@ -32,18 +33,15 @@ public class AddToCart extends BasePage {
         //elementUtil.doClick(searchButton);
     }
 
-    public void selectProduct(int index) {
+    public void selectProduct() {
+
         List<WebElement> products = elementUtil.getElements(product);
+        elementUtil.waitForElementToBeClickable(product, 15);
+        int randomIndex = new Random().nextInt(products.size());
+        System.out.println(randomIndex);
+        products.get(randomIndex).click();
 
-        if (index >= 0 && index < products.size()) {
-            elementUtil.waitForElementToBeVisible(product, 15);
-            products.get(index).click();
-        } else {
-            throw new IllegalArgumentException("Invalid product index " + index);
-        }
     }
-
-
 
 
     public void addToCart() {
@@ -96,8 +94,9 @@ public class AddToCart extends BasePage {
         try {
             elementUtil.waitForElementToBeClickable(sizeSelector, 15);
             List<WebElement> sizes = elementUtil.getElements(sizeSelector);
+            int randomSize=new Random().nextInt(sizes.size());;
             if (!sizes.isEmpty()) {
-                sizes.get(0).click();
+                sizes.get(randomSize).click();
                 logger.info("Beden seçildi.");
             }
         } catch (Exception e) {
